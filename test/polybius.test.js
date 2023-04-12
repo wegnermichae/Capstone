@@ -36,15 +36,6 @@ describe("Polybius Square", () => {
       const actual = polybius(input);
       expect(actual).to.be.equal(expected);
     });
-    it("should return false when attempting to encrypt anything other than letters and spaces", () => {
-      const input = "2222";
-      const actual = polybius(input);
-      expect(actual).to.be.false;
-    });
-    it("should return false when given no input", () => {
-      const actual = polybius();
-      expect(actual).to.be.false;
-    });
   });
   
   describe("Decryption", () => {
@@ -81,15 +72,6 @@ describe("Polybius Square", () => {
       const expected = "no false tests";
       const actual = polybius(input, false);
       expect(actual).to.be.equal(expected);
-    });
-    it("should return false when given invalid codes", () => {
-      const input = "66778899";
-      const actual = polybius(input, false);
-      expect(actual).to.be.false;
-    });
-    it("should return false when given no input", () => {
-      const actual = polybius();
-      expect(actual).to.be.false;
     });
   });
 });

@@ -1,48 +1,44 @@
 // Please refrain from tampering with the setup code provided here,
 // as the index.html and test files rely on this setup to work properly.
-// Only add code (helper methods, variables, etc.) within the scope
+// Only add code (e.g., helper methods, variables, etc.) within the scope
 // of the anonymous function on line 6
 
 const substitutionModule = (function () {
-  let realAlphabet = "abcdefghijklmnopqrstuvwxyz".split("");
-
+  const alphaKey = "abcdefghijklmnopqrstuvwxyz".split("");
   function substitution(input, alphabet, encode = true) {
-    if (!alphabet) return false;
-    if (alphabet.length != 26) return false;
-    for (let i = 0; i < input.length; i++) {
-      if (alphabet.indexOf(input[i]) != alphabet.lastIndexOf(input[i]))
-        return false;
+    try {
+      _validAlphabet(alphabet);
+      const codeKey = alphabet.toLowerCase().split("");
+      return input
+        .toLowerCase() 
+        .split("") 
+        .map(
+          (word) =>
+            encode
+              ? _mapTo(word, alphaKey, codeKey) 
+              : _mapTo(word, codeKey, alphaKey) 
+        )
+        .join(""); 
+    } catch (error) {
+      return false; 
     }
-    if (encode) return subEncode(input, alphabet);
-    return subDecode(input, alphabet);
   }
 
-  function subEncode(input, alphabet) {
-    let codeMessage = [];
-    input = input.toLowerCase();
-    for (let i = 0; i < input.length; i++) {
-      let codeIndex = realAlphabet.indexOf(input[i]);
-      let codeLetter = alphabet[codeIndex];
-      if (codeIndex < 0) {
-        codeMessage.push(input[i]);
-      }
-      codeMessage.push(codeLetter);
-      console.log(codeLetter);
-    }
-    return codeMessage.join("");
+  function _mapTo(input, fromKey, toKey) {
+    if (input.match(/\s/)) return input; 
+    const index = fromKey.indexOf(input); 
+    if (index === -1)
+      throw new Error(`${input} not found in the provided alphabet!`); 
+    return toKey[index]; 
   }
 
-  function subDecode(input, alphabet) {
-    let decodeMessage = [];
-    for (let i = 0; i < input.length; i++) {
-      let decodeIndex = alphabet.indexOf(input[i]);
-      let decodeLetter = realAlphabet[decodeIndex];
-      if (decodeIndex < 0) {
-        decodeMessage.push(input[i]);
-      }
-      decodeMessage.push(decodeLetter);
-    }
-    return decodeMessage.join("");
+  
+  function _validAlphabet(alphabet) {
+    if (alphabet.length !== 26)
+      throw new Error(`Alphabet must be exactly 26 characters long!`);
+
+    if ([...new Set(alphabet)].length !== alphabet.length)
+      throw new Error(`Alphabet cannot contain repeating characters!`);
   }
 
   return {

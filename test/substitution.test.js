@@ -3,6 +3,9 @@ const expect = require("chai").expect;
 const { substitution } = require("../src/substitution");
 
 describe("Substitution Cypher", () => {
+  /*************************************************
+   * *  * * * * * * * ENCRYPTING * * * * * * * * * *
+   *************************************************/
   describe("Encryption", () => {
     it("encrypts single word correctly", () => {
       const input = "hello";
@@ -45,7 +48,9 @@ describe("Substitution Cypher", () => {
       expect(actual).to.be.false;
     });
   });
-
+  /*************************************************
+   * *  * * * * * * * DECRYPTING * * * * * * * * * *
+   *************************************************/
   describe("Decryption", () => {
     it("decrypts single word correctly", () => {
       const input = "rmwwl";
@@ -89,6 +94,9 @@ describe("Substitution Cypher", () => {
       expect(actual).to.be.false;
     });
   });
+  /**************************************************
+   * *  * * * * * * * ERROR CASES * * * * * * * * * *
+   **************************************************/
   describe("Invalid Alphabet Errors", () => {
     it("should return false when alphabet is not provided", () => {
       const input = "this message should not be seen";

@@ -8,6 +8,9 @@ const caesarModule = (function () {
 
   function caesar(input, shift, encode = true) {
     const message = [];
+    if(input.length === 0){
+      return false;
+    }
     input = input.toLowerCase();
     if (shift === 0 || shift < -25 || shift > 25) {
       return false;
